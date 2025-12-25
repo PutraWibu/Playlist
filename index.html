@@ -81,7 +81,7 @@ button:hover {
   <h1 id="title">Judul Lagu</h1>
   <p id="artist">Nama Artist</p>
 
-  <audio id="audio"></audio>
+  <audio id="audio" preload="auto"></audio>
 
   <div class="controls">
     <button id="prev">⏮</button>
@@ -92,101 +92,25 @@ button:hover {
 
 <script>
 // =====================
-// DATA LAGU (EDIT DI SINI AJA)
+// PLAYLIST (AMAN, TIDAK DIUBAH)
 // =====================
 const playlist = [
-  {
-    title: "Dimana Hatimu - Papinka ",
-    artist: "By PutraMods",
-    src: "https://files.catbox.moe/b3cf4r.mp3",
-    cover: "https://files.catbox.moe/pgafn0.jpg"
-  },
-  {
-    title: "Hal Terindah - Seventeen",
-    artist: "PutraMods",
-    src: "https://files.catbox.moe/bsczdz.mp3",
-    cover: "https://files.catbox.moe/wgiznj.jpg"
-  },
-  {
-    title: "Monolog - Pamungkas",
-    artist:"PutraMods",
-    src: "https://files.catbox.moe/nm1td2.mp3",
-    cover: "https://files.catbox.moe/parsdw.jpg"
-  },
-  {
-    title: "Resah bali - Lavora",
-    artist: "FirmanMods",
-    src: "https://files.catbox.moe/ddsn8z.mp3",
-    cover: "https://files.catbox.moe/6md7rl.jpeg"
-  },
-  {
-    title: "Dumes - Guyon waton",
-    artist:"FirmanMods",
-    src: "https://files.catbox.moe/fw9b59.mp3",
-    cover: "https://files.catbox.moe/kxgvds.jpg"
-  },
-  {
-    title: "Wish you were here - Pink Floyd",
-    artist:"Jooo",
-    src: "https://files.catbox.moe/2nhr0r.mp3",
-    cover: "https://files.catbox.moe/c1d4t1.jpg"
-  },
-  {
-    title: "Sedia aku sebelum hujan - idgitaf",
-    artist:"PutraMods",
-    src: "https://files.catbox.moe/5nfuhy.mp3",
-    cover: "https://files.catbox.moe/t3ggko.jpg"
-  },
-  {
-    title: "NDX A.K.A - Rasah Dadi Pelangi",
-    artist:"JoooTezyh",
-    src: "https://files.catbox.moe/1ec5c2.mp3",
-    cover: "https://files.catbox.moe/fmpvs9.jpg"
-  },
-  {
-    title: "Kesepian - Vierra",
-    artist:"PutraMods",
-    src: "https://files.catbox.moe/wwowji.mp3",
-    cover: "https://files.catbox.moe/cnwc8f.jpg"
-  },
-  {
-    title: "Pergi tak meninggalkan X Dia masa lalumu",
-    artist:"PutraMods",
-    src: "https://files.catbox.moe/bgoj6y.mp3",
-    cover: "https://files.catbox.moe/83d9nb.jpg"
-  },
-  {
-    title: "Avenged Sevenfold - Dear God",
-    artist:"JoooTezyh",
-    src: "https://files.catbox.moe/kb4g6v.mp3",
-    cover: "https://files.catbox.moe/6fy7q3.jpg"
-  },
-  {
-    title: "Owl City- Firefilies",
-    artist:"JoooTezyh",
-    src: "https://files.catbox.moe/jwub37.mp3",
-    cover: "https://files.catbox.moe/7bcsg6.jpg"
-  },
-  {
-    title: "Tak sanggup lagi - Rossa",
-    artist:"PutraMods",
-    src: "https://files.catbox.moe/b5vyeu.mp3",
-    cover: "https://files.catbox.moe/b5evoy.jpg"
-  },
-  {
-    title: "Kembali Pulang - Feby Putri",
-    artist:"PutraMods",
-    src: "https://files.catbox.moe/ejhdtn.mp3",
-    cover: "https://files.catbox.moe/80hrdl.jpg"
-  },
-  {
-    title: "Resah Jadi luka - Daun jatuh",
-    artist:"PutraMods",
-    src: "https://files.catbox.moe/bs309g.mp3",
-    cover: "https://files.catbox.moe/1yf63v.jpg"
-  },
-  
-];  
+  { title:"Dimana Hatimu - Papinka", artist:"By PutraMods", src:"https://files.catbox.moe/b3cf4r.mp3", cover:"https://files.catbox.moe/pgafn0.jpg" },
+  { title:"Hal Terindah - Seventeen", artist:"PutraMods", src:"https://files.catbox.moe/bsczdz.mp3", cover:"https://files.catbox.moe/wgiznj.jpg" },
+  { title:"Monolog - Pamungkas", artist:"PutraMods", src:"https://files.catbox.moe/nm1td2.mp3", cover:"https://files.catbox.moe/parsdw.jpg" },
+  { title:"Resah bali - Lavora", artist:"FirmanMods", src:"https://files.catbox.moe/ddsn8z.mp3", cover:"https://files.catbox.moe/6md7rl.jpeg" },
+  { title:"Dumes - Guyon waton", artist:"FirmanMods", src:"https://files.catbox.moe/fw9b59.mp3", cover:"https://files.catbox.moe/kxgvds.jpg" },
+  { title:"Wish you were here - Pink Floyd", artist:"Jooo", src:"https://files.catbox.moe/2nhr0r.mp3", cover:"https://files.catbox.moe/c1d4t1.jpg" },
+  { title:"Sedia aku sebelum hujan - idgitaf", artist:"PutraMods", src:"https://files.catbox.moe/5nfuhy.mp3", cover:"https://files.catbox.moe/t3ggko.jpg" },
+  { title:"NDX A.K.A - Rasah Dadi Pelangi", artist:"JoooTezyh", src:"https://files.catbox.moe/1ec5c2.mp3", cover:"https://files.catbox.moe/fmpvs9.jpg" },
+  { title:"Kesepian - Vierra", artist:"PutraMods", src:"https://files.catbox.moe/wwowji.mp3", cover:"https://files.catbox.moe/cnwc8f.jpg" },
+  { title:"Pergi tak meninggalkan X Dia masa lalumu", artist:"PutraMods", src:"https://files.catbox.moe/bgoj6y.mp3", cover:"https://files.catbox.moe/83d9nb.jpg" },
+  { title:"Avenged Sevenfold - Dear God", artist:"JoooTezyh", src:"https://files.catbox.moe/kb4g6v.mp3", cover:"https://files.catbox.moe/6fy7q3.jpg" },
+  { title:"Owl City - Fireflies", artist:"JoooTezyh", src:"https://files.catbox.moe/jwub37.mp3", cover:"https://files.catbox.moe/7bcsg6.jpg" },
+  { title:"Tak sanggup lagi - Rossa", artist:"PutraMods", src:"https://files.catbox.moe/b5vyeu.mp3", cover:"https://files.catbox.moe/b5evoy.jpg" },
+  { title:"Kembali Pulang - Feby Putri", artist:"PutraMods", src:"https://files.catbox.moe/ejhdtn.mp3", cover:"https://files.catbox.moe/80hrdl.jpg" },
+  { title:"Resah Jadi luka - Daun jatuh", artist:"PutraMods", src:"https://files.catbox.moe/bs309g.mp3", cover:"https://files.catbox.moe/1yf63v.jpg" }
+];
 
 // =====================
 // ELEMENT
@@ -196,25 +120,55 @@ const audio = document.getElementById("audio");
 const title = document.getElementById("title");
 const artist = document.getElementById("artist");
 const cover = document.getElementById("cover");
-
 const playBtn = document.getElementById("play");
 const nextBtn = document.getElementById("next");
 const prevBtn = document.getElementById("prev");
 
 // =====================
-// FUNCTION
+// SMART AUDIO SYSTEM
 // =====================
-function loadSong(i) {
-  audio.src = playlist[i].src;
+audio.crossOrigin = "anonymous";
+const audioCache = new Map();
+
+function cacheSong(i) {
+  if (audioCache.has(i)) return;
+  const a = new Audio();
+  a.src = playlist[i].src;
+  a.preload = "auto";
+  audioCache.set(i, a);
+}
+
+function smartPreload(i) {
+  cacheSong(i);
+  cacheSong((i + 1) % playlist.length);
+}
+
+function loadSong(i, autoPlay = false) {
+  smartPreload(i);
+  const cached = audioCache.get(i);
+
+  audio.pause();
+  audio.src = cached.src;
+  audio.load();
+
   title.textContent = playlist[i].title;
   artist.textContent = playlist[i].artist;
   cover.src = playlist[i].cover;
+
+  if (autoPlay) {
+    audio.oncanplay = () => {
+      audio.play();
+      playBtn.textContent = "⏸";
+    };
+  }
 }
 
+// =====================
+// CONTROLS
+// =====================
 function playPause() {
   if (audio.paused) {
-    audio.play();
-    playBtn.textContent = "⏸";
+    audio.play().then(() => playBtn.textContent = "⏸");
   } else {
     audio.pause();
     playBtn.textContent = "▶";
@@ -222,19 +176,13 @@ function playPause() {
 }
 
 function nextSong() {
-  index++;
-  if (index >= playlist.length) index = 0;
-  loadSong(index);
-  audio.play();
-  playBtn.textContent = "⏸";
+  index = (index + 1) % playlist.length;
+  loadSong(index, true);
 }
 
 function prevSong() {
-  index--;
-  if (index < 0) index = playlist.length - 1;
-  loadSong(index);
-  audio.play();
-  playBtn.textContent = "⏸";
+  index = (index - 1 + playlist.length) % playlist.length;
+  loadSong(index, true);
 }
 
 // =====================
@@ -246,8 +194,11 @@ prevBtn.addEventListener("click", prevSong);
 
 audio.addEventListener("ended", nextSong);
 
-// LOAD FIRST SONG
+// =====================
+// INIT
+// =====================
 loadSong(index);
+smartPreload(index);
 </script>
 
 </body>
