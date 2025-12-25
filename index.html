@@ -2,87 +2,86 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>My Personal Playlist</title>
 <link rel="icon" type="image/png" href="https://files.catbox.moe/vlnh1d.png">
+
 <style>
-/* RESET */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 
 /* BASE */
 body{
-  min-height:100vh;
+  min-height:100svh;
   background:linear-gradient(135deg,#0f0f0f,#2b2b2b);
   display:flex;
   justify-content:center;
   align-items:center;
-  color:#fff
+  color:#fff;
+  padding:
+    calc(16px + env(safe-area-inset-top))
+    calc(16px + env(safe-area-inset-right))
+    calc(16px + env(safe-area-inset-bottom))
+    calc(16px + env(safe-area-inset-left))
 }
 
 /* PLAYER */
 .player{
-  width:340px;
+  width:100%;
+  max-width:420px;
   background:rgba(0,0,0,.65);
-  padding:20px;
+  padding:clamp(16px,4vw,20px);
   border-radius:18px;
   box-shadow:0 15px 40px rgba(0,0,0,.6);
-  text-align:center
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  max-height:calc(100svh - 120px)
 }
+
 .cover{
   width:100%;
-  height:200px;
+  aspect-ratio:16/9;
   object-fit:cover;
   border-radius:14px;
   margin-bottom:15px
 }
-h1{
-  font-size:20px;
-  margin-bottom:4px
-}
-p{
-  font-size:14px;
-  color:#ccc;
-  margin-bottom:12px
-}
+
+h1{font-size:clamp(18px,4.5vw,20px);margin-bottom:4px}
+p{font-size:clamp(13px,3.5vw,14px);color:#ccc;margin-bottom:12px}
 
 /* CONTROLS */
 .controls{
   display:flex;
   justify-content:center;
-  gap:14px;
+  gap:clamp(10px,3vw,14px);
   margin-bottom:10px
 }
+
 button{
-  width:48px;
-  height:48px;
+  width:clamp(44px,11vw,48px);
+  height:clamp(44px,11vw,48px);
   border-radius:50%;
   border:none;
-  font-size:18px;
+  font-size:clamp(16px,4vw,18px);
   cursor:pointer;
   background:#ff4d4d;
   color:#fff;
   transition:.2s
 }
+
 button.small{
-  width:38px;
-  height:38px;
-  font-size:14px;
+  width:clamp(36px,9vw,38px);
+  height:clamp(36px,9vw,38px);
+  font-size:clamp(13px,3.5vw,14px);
   background:#444
 }
-button.active{
-  background:#ff1f1f
-}
-button:hover{
-  transform:scale(1.1)
-}
+
+button.active{background:#ff1f1f}
+button:hover{transform:scale(1.1)}
 
 /* STATUS */
 .status{
-  font-size:12px;
+  font-size:clamp(11px,3vw,12px);
   color:#aaa;
   margin-bottom:8px;
   min-height:14px
@@ -91,20 +90,25 @@ button:hover{
 /* PLAYLIST */
 .playlist-box{
   margin-top:10px;
-  text-align:left
+  text-align:left;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:0
 }
+
 .playlist-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:6px
 }
-.playlist-header span{
-  font-size:14px
-}
+
+.playlist-header span{font-size:clamp(13px,3.5vw,14px)}
+
 .search{
   width:100%;
-  padding:6px 8px;
+  padding:8px;
   border-radius:8px;
   border:none;
   outline:none;
@@ -112,16 +116,13 @@ button:hover{
 }
 
 .playlist{
-  max-height:180px;
+  flex:1;
   overflow-y:auto;
   display:none
 }
-.playlist.show{
-  display:block
-}
-.playlist::-webkit-scrollbar{
-  width:4px
-}
+.playlist.show{display:block}
+
+.playlist::-webkit-scrollbar{width:4px}
 .playlist::-webkit-scrollbar-thumb{
   background:#ff4d4d;
   border-radius:4px
@@ -130,18 +131,13 @@ button:hover{
 .track{
   padding:8px;
   border-radius:8px;
-  font-size:13px;
+  font-size:clamp(12px,3.3vw,13px);
   color:#ccc;
   cursor:pointer;
   transition:.2s
 }
-.track:hover{
-  background:rgba(255,255,255,.08)
-}
-.track.active{
-  background:#ff4d4d;
-  color:#fff
-}
+.track:hover{background:rgba(255,255,255,.08)}
+.track.active{background:#ff4d4d;color:#fff}
 
 /* FOOTER */
 .footer{
@@ -149,10 +145,14 @@ button:hover{
   bottom:0;
   left:0;
   width:100%;
-  padding:8px 0;
+  padding:
+    8px
+    env(safe-area-inset-right)
+    calc(8px + env(safe-area-inset-bottom))
+    env(safe-area-inset-left);
   background:rgba(0,0,0,.55);
   text-align:center;
-  font-size:12px;
+  font-size:clamp(11px,3vw,12px);
   color:#bbb;
   letter-spacing:.5px;
   z-index:10;
@@ -160,8 +160,9 @@ button:hover{
 }
 </style>
 </head>
-<div class="footer"> © Powered By PutraMods ᯤ</div>
+
 <body>
+
 <div class="player">
   <img id="cover" class="cover">
   <h1 id="title"></h1>
@@ -189,11 +190,12 @@ button:hover{
   </div>
 </div>
 
+<div class="footer">© Powered By PutraMods ᯤ</div>
+
 <script>
-// =====================
-// PLAYLIST DATA
-// =====================
-const playlist = [
+/* PLAYLIST DATA  */
+
+  const playlist = [
   {
     title: "Dimana Hatimu - Papinka ",
     artist: "By PutraMods",
@@ -406,14 +408,10 @@ const playlist = [
   },
 ];  
 
-
-// =====================
-// STATE
-// =====================
 let index = +localStorage.getItem("lastIndex") || 0;
 let hasUserPlayed = false;
 let shuffle = false;
-let repeatMode = 0; // 0 off | 1 one | 2 all
+let repeatMode = 0;
 
 const audio = document.getElementById("audio");
 const title = document.getElementById("title");
@@ -422,7 +420,6 @@ const cover = document.getElementById("cover");
 const playlistEl = document.getElementById("playlist");
 const statusEl = document.getElementById("status");
 
-// =====================
 function loadSong(i){
   audio.pause();
   audio.src = playlist[i].src;
@@ -435,6 +432,77 @@ function loadSong(i){
 }
 
 function play(){
+  hasUserPlayed = true;
+  audio.play();
+  document.getElementById("play").textContent="||";
+}
+
+function next(){
+  index = shuffle
+    ? Math.floor(Math.random()*playlist.length)
+    : (index+1)%playlist.length;
+  loadSong(index); play();
+}
+
+function prev(){
+  index = (index-1+playlist.length)%playlist.length;
+  loadSong(index); play();
+}
+
+function renderList(filter=""){
+  playlistEl.innerHTML="";
+  playlist.forEach((s,i)=>{
+    if(!s.title.toLowerCase().includes(filter)) return;
+    const d=document.createElement("div");
+    d.className="track";
+    d.textContent=s.title;
+    d.onclick=()=>{index=i;loadSong(i);play();}
+    playlistEl.appendChild(d);
+  });
+  updateActive();
+}
+
+function updateActive(){
+  [...playlistEl.children].forEach(el=>{
+    el.classList.toggle("active",el.textContent===playlist[index].title);
+  });
+}
+
+audio.onwaiting=()=>statusEl.textContent="Loading...";
+audio.onplaying=()=>statusEl.textContent="ᯤ Now Playing ";
+audio.onended=()=>{
+  if(repeatMode===1) play();
+  else if(repeatMode===2) next();
+};
+
+document.getElementById("play").onclick=()=>audio.paused?play():audio.pause();
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+
+document.getElementById("shuffle").onclick=e=>{
+  shuffle=!shuffle;
+  e.target.classList.toggle("active",shuffle);
+};
+
+document.getElementById("repeat").onclick=e=>{
+  repeatMode=(repeatMode+1)%3;
+  e.target.textContent=["🔁","🔂","🔁∞"][repeatMode];
+};
+
+document.getElementById("toggleList").onclick=()=>{
+  playlistEl.classList.toggle("show");
+};
+
+document.getElementById("search").oninput=e=>{
+  renderList(e.target.value.toLowerCase());
+};
+
+renderList();
+loadSong(index);
+</script>
+
+</body>
+</html>unction play(){
   hasUserPlayed = true;
   audio.play();
   document.getElementById("play").textContent="||";
