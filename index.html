@@ -5,139 +5,516 @@
 <title>My Personal Playlist</title>
 <link rel="icon" type="image/png" href="https://files.catbox.moe/vlnh1d.png">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{min-height:100vh;background:linear-gradient(135deg,#0f0f0f,#2b2b2b);display:flex;justify-content:center;align-items:center;color:#fff}
-.player{width:340px;background:rgba(0,0,0,.65);padding:20px;border-radius:18px;box-shadow:0 15px 40px rgba(0,0,0,.6);text-align:center}
-.cover{width:100%;height:200px;object-fit:cover;border-radius:14px;margin-bottom:15px}
-h1{font-size:20px;margin-bottom:4px}
-p{font-size:14px;color:#ccc;margin-bottom:18px}
-.controls{display:flex;justify-content:center;gap:18px}
-button{width:55px;height:55px;border-radius:50%;border:none;font-size:20px;cursor:pointer;background:#ff4d4d;color:#fff;transition:.25s}
-button:hover{transform:scale(1.1);background:#ff1f1f}
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif
+}
+
+/* BASE */
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0f0f0f,#2b2b2b);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff
+}
+
+/* PLAYER */
+.player{
+  width:340px;
+  background:rgba(0,0,0,.65);
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 15px 40px rgba(0,0,0,.6);
+  text-align:center
+}
+.cover{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:14px;
+  margin-bottom:15px
+}
+h1{
+  font-size:20px;
+  margin-bottom:4px
+}
+p{
+  font-size:14px;
+  color:#ccc;
+  margin-bottom:12px
+}
+
+/* CONTROLS */
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:10px
+}
+button{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+  background:#ff4d4d;
+  color:#fff;
+  transition:.2s
+}
+button.small{
+  width:38px;
+  height:38px;
+  font-size:14px;
+  background:#444
+}
+button.active{
+  background:#ff1f1f
+}
+button:hover{
+  transform:scale(1.1)
+}
+
+/* STATUS */
+.status{
+  font-size:12px;
+  color:#aaa;
+  margin-bottom:8px;
+  min-height:14px
+}
+
+/* PLAYLIST */
+.playlist-box{
+  margin-top:10px;
+  text-align:left
+}
+.playlist-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:6px
+}
+.playlist-header span{
+  font-size:14px
+}
+.search{
+  width:100%;
+  padding:6px 8px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+  margin-bottom:6px
+}
+
+.playlist{
+  max-height:180px;
+  overflow-y:auto;
+  display:none
+}
+.playlist.show{
+  display:block
+}
+.playlist::-webkit-scrollbar{
+  width:4px
+}
+.playlist::-webkit-scrollbar-thumb{
+  background:#ff4d4d;
+  border-radius:4px
+}
+
+.track{
+  padding:8px;
+  border-radius:8px;
+  font-size:13px;
+  color:#ccc;
+  cursor:pointer;
+  transition:.2s
+}
+.track:hover{
+  background:rgba(255,255,255,.08)
+}
+.track.active{
+  background:#ff4d4d;
+  color:#fff
+}
+
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:8px 0;
+  background:rgba(0,0,0,.55);
+  text-align:center;
+  font-size:12px;
+  color:#bbb;
+  letter-spacing:.5px;
+  z-index:10;
+  backdrop-filter:blur(4px)
+}
 </style>
 </head>
-
+<div class="footer"> © Powered By PutraMods ᯤ</div>
 <body>
 <div class="player">
   <img id="cover" class="cover">
   <h1 id="title"></h1>
   <p id="artist"></p>
+
   <audio id="audio" preload="auto"></audio>
+
   <div class="controls">
+    <button id="shuffle" class="small">🔀</button>
     <button id="prev">⏮</button>
     <button id="play">▶</button>
     <button id="next">⏭</button>
+    <button id="repeat" class="small">🔁</button>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <div class="playlist-box">
+    <div class="playlist-header">
+      <span>Playlist</span>
+      <button id="toggleList" class="small">▼</button>
+    </div>
+    <input id="search" class="search" placeholder="Cari lagu...">
+    <div id="playlist" class="playlist"></div>
   </div>
 </div>
 
 <script>
 // =====================
-// PLAYLIST (UTUH, TIDAK DIUBAH)
+// PLAYLIST DATA
 // =====================
 const playlist = [
-  {title:"Dimana Hatimu - Papinka",artist:"By PutraMods",src:"https://files.catbox.moe/b3cf4r.mp3",cover:"https://files.catbox.moe/pgafn0.jpg"},
-  {title:"Hal Terindah - Seventeen",artist:"PutraMods",src:"https://files.catbox.moe/bsczdz.mp3",cover:"https://files.catbox.moe/wgiznj.jpg"},
-  {title:"Monolog - Pamungkas",artist:"PutraMods",src:"https://files.catbox.moe/nm1td2.mp3",cover:"https://files.catbox.moe/parsdw.jpg"},
-  {title:"Resah bali - Lavora",artist:"FirmanMods",src:"https://files.catbox.moe/ddsn8z.mp3",cover:"https://files.catbox.moe/6md7rl.jpeg"},
-  {title:"Dumes - Guyon waton",artist:"FirmanMods",src:"https://files.catbox.moe/fw9b59.mp3",cover:"https://files.catbox.moe/kxgvds.jpg"},
-  {title:"Wish you were here - Pink Floyd",artist:"Jooo",src:"https://files.catbox.moe/2nhr0r.mp3",cover:"https://files.catbox.moe/c1d4t1.jpg"},
-  {title:"Sedia aku sebelum hujan - idgitaf",artist:"PutraMods",src:"https://files.catbox.moe/5nfuhy.mp3",cover:"https://files.catbox.moe/t3ggko.jpg"},
-  {title:"NDX A.K.A - Rasah Dadi Pelangi",artist:"JoooTezyh",src:"https://files.catbox.moe/1ec5c2.mp3",cover:"https://files.catbox.moe/fmpvs9.jpg"},
-  {title:"Kesepian - Vierra",artist:"PutraMods",src:"https://files.catbox.moe/wwowji.mp3",cover:"https://files.catbox.moe/cnwc8f.jpg"},
-  {title:"Pergi tak meninggalkan X Dia masa lalumu",artist:"PutraMods",src:"https://files.catbox.moe/bgoj6y.mp3",cover:"https://files.catbox.moe/83d9nb.jpg"},
-  {title:"Avenged Sevenfold - Dear God",artist:"JoooTezyh",src:"https://files.catbox.moe/kb4g6v.mp3",cover:"https://files.catbox.moe/6fy7q3.jpg"},
-  {title:"Owl City - Fireflies",artist:"JoooTezyh",src:"https://files.catbox.moe/jwub37.mp3",cover:"https://files.catbox.moe/7bcsg6.jpg"},
-  {title:"Tak sanggup lagi - Rossa",artist:"PutraMods",src:"https://files.catbox.moe/b5vyeu.mp3",cover:"https://files.catbox.moe/b5evoy.jpg"},
-  {title:"Kembali Pulang - Feby Putri",artist:"PutraMods",src:"https://files.catbox.moe/ejhdtn.mp3",cover:"https://files.catbox.moe/80hrdl.jpg"},
-  {title:"Resah Jadi luka - Daun jatuh",artist:"PutraMods",src:"https://files.catbox.moe/bs309g.mp3",cover:"https://files.catbox.moe/1yf63v.jpg"}
-];
+  {
+    title: "Dimana Hatimu - Papinka ",
+    artist: "By PutraMods",
+    src: "https://files.catbox.moe/b3cf4r.mp3",
+    cover: "https://files.catbox.moe/pgafn0.jpg"
+  },
+  {
+    title: "Hal Terindah - Seventeen",
+    artist: "PutraMods",
+    src: "https://files.catbox.moe/bsczdz.mp3",
+    cover: "https://files.catbox.moe/wgiznj.jpg"
+  },
+  {
+    title: "Monolog - Pamungkas",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/nm1td2.mp3",
+    cover: "https://files.catbox.moe/parsdw.jpg"
+  },
+  {
+    title: "Resah bali - Lavora",
+    artist: "FirmanMods",
+    src: "https://files.catbox.moe/ddsn8z.mp3",
+    cover: "https://files.catbox.moe/6md7rl.jpeg"
+  },
+  {
+    title: "Dumes - Guyon waton",
+    artist:"FirmanMods",
+    src: "https://files.catbox.moe/fw9b59.mp3",
+    cover: "https://files.catbox.moe/kxgvds.jpg"
+  },
+  {
+    title: "Wish you were here - Pink Floyd",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/2nhr0r.mp3",
+    cover: "https://files.catbox.moe/c1d4t1.jpg"
+  },
+  {
+    title: "Sedia aku sebelum hujan - idgitaf",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/5nfuhy.mp3",
+    cover: "https://files.catbox.moe/t3ggko.jpg"
+  },
+  {
+    title: "NDX A.K.A - Rasah Dadi Pelangi",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/1ec5c2.mp3",
+    cover: "https://files.catbox.moe/fmpvs9.jpg"
+  },
+  {
+    title: "Kesepian - Vierra",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/wwowji.mp3",
+    cover: "https://files.catbox.moe/cnwc8f.jpg"
+  },
+  {
+    title: "Pergi tak meninggalkan X Dia masa lalumu",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/bgoj6y.mp3",
+    cover: "https://files.catbox.moe/83d9nb.jpg"
+  },
+  {
+    title: "Avenged Sevenfold - Dear God",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/kb4g6v.mp3",
+    cover: "https://files.catbox.moe/6fy7q3.jpg"
+  },
+  {
+    title: "Owl City- Firefilies",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/jwub37.mp3",
+    cover: "https://files.catbox.moe/7bcsg6.jpg"
+  },
+  {
+    title: "Tulus - Monokrom",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/ahbixk.jpg",
+    cover: "https://files.catbox.moe/6fy7q3.jpg"
+  },
+  {
+    title: "Lenka - Trouble Is a Friend",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/zg51zw.mp3",
+    cover: "https://files.catbox.moe/mwjo4b.jpg"
+  },
+  {
+    title: "Tak sanggup lagi - Rossa",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/b5vyeu.mp3",
+    cover: "https://files.catbox.moe/b5evoy.jpg"
+  },
+  {
+    title: "Zivilia - Aishiteru",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/uvfnm5.mp3",
+    cover: "https://files.catbox.moe/l3d08q.jpg"
+  },
+  {
+    title: "Zivilia - Aishiteru 3",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/oqaqyc.mp3",
+    cover: "https://files.catbox.moe/ol179u.jpg"
+  },
+  {
+    title: "Kembali Pulang - Feby Putri",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/ejhdtn.mp3",
+    cover: "https://files.catbox.moe/80hrdl.jpg"
+  },
+  {
+    title: "Resah Jadi luka - Daun jatuh",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/bs309g.mp3",
+    cover: "https://files.catbox.moe/1yf63v.jpg"
+  },
+  {
+    title: "Neck Deep - December",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/ldvsrk.mp3",
+    cover: "https://files.catbox.moe/dbg11u.jpg"
+  },
+  {
+    title: "Dash Uciha - Merindukanmu",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/1h043s.mp3",
+    cover: "https://files.catbox.moe/3gwuav.jpg"
+  },
+  {
+    title: "NDX A.K.A - Kelingan Mantan",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/j35wom.mp3",
+    cover: "https://files.catbox.moe/sba7i8.jpg"
+  },
+  {
+    title: "NDX A.K.A - Piwales Tresno",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/f6mw14.mp3",
+    cover: "https://files.catbox.moe/gvmu3r.jpg"
+  },
+  {
+    title: "Last Child - Sekuat Hatimu",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/s43wo0.mp3",
+    cover: "https://files.catbox.moe/eq1gn4.jpg"
+  },
+  {
+    title: "Kepastian Rasa",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/k59jey.mp3",
+    cover: "https://files.catbox.moe/1v6hmy.jpg"
+  },
+  {
+    title: "Gita Gutawa - Sempurna",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/yjm8dv.mp3",
+    cover: "https://files.catbox.moe/xjl41p.jpg"
+  },
+  {
+    title: "Last Child - Seluruh Nafas Ini",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/yo7s6s.mp3",
+    cover: "https://files.catbox.moe/2g76lj.jpg"
+  },
+  {
+    title: "Disarankan di Bandung",
+    artist:"PutraMods",
+    src: "https://files.catbox.moe/pwlhus.mp3",
+    cover: "https://files.catbox.moe/70lt7c.jpg"
+  },
+  {
+    title: "Virgoun - Surat Cinta Untuk Starla",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/d65cfm.mp3",
+    cover: "https://files.catbox.moe/639hz1.jpg"
+  },
+  {
+    title: "Armada - Asal Kau Bahagia",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/6kxegv.mp3",
+    cover: "https://files.catbox.moe/i9cyhq.jpg"
+  },
+  {
+    title: "Wali Band - Baik Baik Sayang",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/a18192.mp3",
+    cover: "https://files.catbox.moe/f3artt.jpg"
+  },
+  {
+    title: "T2 - Lelaki Cadangan",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/sarzn5.mp3",
+    cover: "https://files.catbox.moe/oikqab.jpg"
+  },
+  {
+    title: "Alphaville - Forever Young",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/19rjlt.mp3",
+    cover: "https://files.catbox.moe/ikkcgh.jpg"
+  },
+  {
+    title: "Alan Walker - Lily",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/pjf7de.mp3",
+    cover: "https://files.catbox.moe/aljwn6.jpg"
+  },
+  {
+    title: "Rebelution - Safe and Sound",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/36lfm3.mp3",
+    cover: "https://files.catbox.moe/dn3kfz.jpg"
+  },
+];  
+
 
 // =====================
-// STATE & ELEMENT
+// STATE
 // =====================
-let index = 0;
+let index = +localStorage.getItem("lastIndex") || 0;
 let hasUserPlayed = false;
+let shuffle = false;
+let repeatMode = 0; // 0 off | 1 one | 2 all
 
 const audio = document.getElementById("audio");
 const title = document.getElementById("title");
 const artist = document.getElementById("artist");
 const cover = document.getElementById("cover");
-const playBtn = document.getElementById("play");
+const playlistEl = document.getElementById("playlist");
+const statusEl = document.getElementById("status");
 
-// =====================
-// SMART PRELOAD (AMAN)
-// =====================
-const cache = new Map();
-
-function cacheSong(i){
-  if(cache.has(i)) return;
-  const a = new Audio();
-  a.src = playlist[i].src;
-  a.preload = "auto";
-  cache.set(i,a);
-}
-
-function smartPreload(i){
-  cacheSong(i);
-  cacheSong((i+1)%playlist.length);
-}
-
-// =====================
-// LOAD ONLY (NO AUTOPLAY)
 // =====================
 function loadSong(i){
-  smartPreload(i);
   audio.pause();
   audio.src = playlist[i].src;
   audio.load();
   title.textContent = playlist[i].title;
   artist.textContent = playlist[i].artist;
   cover.src = playlist[i].cover;
+  localStorage.setItem("lastIndex",i);
+  updateActive();
 }
 
-// =====================
-// CONTROLS
-// =====================
-function playPause(){
-  if(audio.paused){
-    hasUserPlayed = true;
-    audio.play().then(()=>playBtn.textContent="⏸");
+function play(){
+  hasUserPlayed = true;
+  audio.play();
+  document.getElementById("play").textContent="||";
+}
+
+function next(){
+  if(shuffle){
+    index = Math.floor(Math.random()*playlist.length);
   }else{
-    audio.pause();
-    playBtn.textContent="▶";
+    index = (index+1)%playlist.length;
   }
-}
-
-function nextSong(auto=false){
-  index = (index+1)%playlist.length;
   loadSong(index);
-  if(auto){
-    audio.play().then(()=>playBtn.textContent="⏸");
-  }
+  play();
 }
 
-function prevSong(){
+function prev(){
   index = (index-1+playlist.length)%playlist.length;
   loadSong(index);
-  if(hasUserPlayed){
-    audio.play().then(()=>playBtn.textContent="⏸");
-  }
+  play();
+}
+
+// =====================
+// PLAYLIST UI
+// =====================
+function renderList(filter=""){
+  playlistEl.innerHTML="";
+  playlist.forEach((s,i)=>{
+    if(!s.title.toLowerCase().includes(filter)) return;
+    const d=document.createElement("div");
+    d.className="track";
+    d.textContent=s.title;
+    d.onclick=()=>{index=i;loadSong(i);play();}
+    playlistEl.appendChild(d);
+  });
+  updateActive();
+}
+
+function updateActive(){
+  [...playlistEl.children].forEach(el=>{
+    el.classList.toggle("active",el.textContent===playlist[index].title);
+  });
 }
 
 // =====================
 // EVENTS
 // =====================
-playBtn.onclick = playPause;
-document.getElementById("next").onclick = ()=>nextSong(hasUserPlayed);
-document.getElementById("prev").onclick = prevSong;
+audio.onwaiting=()=>statusEl.textContent="Loading...";
+audio.onplaying=()=>statusEl.textContent="ᯤ Now Playing ";
+audio.onended=()=>{
+  if(repeatMode===1) play();
+  else if(repeatMode===2) next();
+};
 
-audio.onended = ()=>nextSong(true);
+document.getElementById("play").onclick=()=>audio.paused?play():audio.pause();
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+
+document.getElementById("shuffle").onclick=e=>{
+  shuffle=!shuffle;
+  e.target.classList.toggle("active",shuffle);
+};
+
+document.getElementById("repeat").onclick=e=>{
+  repeatMode=(repeatMode+1)%3;
+  e.target.textContent=["🔁","🔂","🔁∞"][repeatMode];
+};
+
+document.getElementById("toggleList").onclick=()=>{
+  playlistEl.classList.toggle("show");
+};
+
+document.getElementById("search").oninput=e=>{
+  renderList(e.target.value.toLowerCase());
+};
 
 // =====================
 // INIT
 // =====================
+renderList();
 loadSong(index);
-smartPreload(index);
 </script>
 </body>
-</html>
+  </html>
