@@ -21,7 +21,8 @@ body{
     calc(16px + env(safe-area-inset-top))
     calc(16px + env(safe-area-inset-right))
     calc(16px + env(safe-area-inset-bottom))
-    calc(16px + env(safe-area-inset-left))
+    calc(16px + env(safe-area-inset-left));
+  transition: background 0.8s ease;
 }
 
 /* PLAYER */
@@ -193,11 +194,10 @@ button:hover{transform:scale(1.1)}
 <div class="footer">© Powered By PutraMods ᯤ</div>
 
 <script>
-  alert(" Selamat datang bro, di tempat berkumpulnya lagu lagu sad 🦋🦋")
-/* PLAYLIST DATA  */
+alert(" Selamat datang bro, di tempat berkumpulnya lagu lagu sad 🦋🦋")
 
-  const playlist = [
-  {
+const playlist = [
+{
     title: "Dimana Hatimu - Papinka ",
     artist: "By PutraMods",
     src: "https://files.catbox.moe/b3cf4r.mp3",
@@ -418,7 +418,31 @@ button:hover{transform:scale(1.1)}
     artist: "PutraMods",
     src:"https://files.catbox.moe/59pk8m.mp3",
     cover: "https://files.catbox.moe/liv671.jpg"
- }
+ },
+ {
+    title: "Mr Cho Boy - Where We Are",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/luo7bn.mp3",
+    cover: "https://files.catbox.moe/wrpwm3.jpg"
+  },
+  {
+    title: "Maroon 5 - Payphone",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/oybv5b.mp3",
+    cover: "https://files.catbox.moe/wqdx12.jpeg"
+  },
+  {
+    title: "Alan Walker - On My Way",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/354xyj.mp3",
+    cover: "https://files.catbox.moe/zf9zf5.jpg"
+  },
+  {
+    title: "Alan Walker - Faded",
+    artist:"JoooTezyh",
+    src: "https://files.catbox.moe/lz38cq.mp3",
+    cover: "https://files.catbox.moe/z3sifn.jpg"
+  }
 ];  
 
 let index = +localStorage.getItem("lastIndex") || 0;
@@ -442,6 +466,13 @@ function loadSong(i){
   cover.src = playlist[i].cover;
   localStorage.setItem("lastIndex",i);
   updateActive();
+
+  // Background berubah sesuai cover lagu, blur & gelap
+  document.body.style.transition = "background 0.8s ease";
+  document.body.style.background = `
+    linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
+    url('${playlist[i].cover}') center/cover no-repeat
+  `;
 }
 
 function play(){
@@ -514,5 +545,64 @@ renderList();
 loadSong(index);
 </script>
 
+<canvas id="rainCanvas"></canvas>
+
+<style>
+  #rainCanvas{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1; /* di bawah player */
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById("rainCanvas");
+  const ctx = canvas.getContext("2d");
+  let raindrops = [];
+
+  function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function createRaindrops(count=150){
+    raindrops = [];
+    for(let i=0;i<count;i++){
+      raindrops.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        length: 2 + Math.random()*3,
+        velocity: 1 + Math.random()*2,
+        opacity: 0.1 + Math.random()*0.3
+      });
+    }
+  }
+  createRaindrops();
+
+  function drawRain(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1;
+    raindrops.forEach(r=>{
+      ctx.beginPath();
+      ctx.moveTo(r.x,r.y);
+      ctx.lineTo(r.x,r.y+r.length);
+      ctx.stroke();
+      r.y += r.velocity;
+      if(r.y>canvas.height){
+        r.y = -r.length;
+        r.x = Math.random()*canvas.width;
+      }
+    });
+    requestAnimationFrame(drawRain);
+  }
+  drawRain();
+</script>
 </body>
   </html>
