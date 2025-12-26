@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Personal Playlist</title>
+<link rel="icon" type="image/png" href="https://files.catbox.moe/vlnh1d.png">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="player">
+  <button id="themeToggle" class="theme-toggle">🌙</button>
+  <img id="cover" class="cover">
+  <h1 id="title"></h1>
+  <p id="artist"></p>
+
+  <audio id="audio" preload="auto"></audio>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="time-display">
+      <span id="current-time">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="shuffle" class="small">🔀</button>
+    <button id="prev">⏮</button>
+    <button id="play">▶</button>
+    <button id="next">⏭</button>
+    <button id="repeat" class="small">🔁</button>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <div class="playlist-box">
+    <div class="playlist-header">
+      <span>Playlist</span>
+      <button id="toggleList" class="small">▼</button>
+    </div>
+    <input id="search" class="search" placeholder="Cari lagu...">
+    <div id="playlist" class="playlist"></div>
+  </div>
+</div>
+
+<div class="footer">© Powered By PutraMods ᯤ</div>
+<canvas id="rainCanvas"></canvas>
+
+<div id="welcomeModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>🌟 Selamat Datang di Playlist Musik Sad Kami! 🌟</h2>
+    <p>Nikmati koleksi lagu-lagu yang menyentuh hati dan jiwa. Setiap nada membawa emosi, setiap cerita pasti ada kisah, setiap lirik membawa kenangan,. Mari bersama-sama merenungi kesalahan dan juga kebodohan yg pernah kita perbuat di masa lampau🦋🎶❤️</p>
+    <h3>Terimakasih Untuk Developer</h3>
+    <p>
+      PutraMods Official ( Dev )<br>
+      FirmanMods<br>
+      JoooTezyh<br>
+      PimzMods
+    </p>
+    <button class="btn" onclick="closeModal()">Ok</button>
+  </div>
+</div>
+
+<script src="putratzy.js"></script>
+</body>
+</html>
