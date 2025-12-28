@@ -134,7 +134,7 @@ button.btn-active { background: var(--primary) !important; box-shadow: 0 0 15px 
     background: rgba(0,0,0,0.85); text-align: center; font-size: 11px; 
     color: #fff; z-index: 9998; backdrop-filter: blur(10px); 
     padding-bottom: calc(15px + env(safe-area-inset-bottom)); 
-    border-top: 1px solid rgba(255,255,255,0.1); 
+    
 }
 
 /* --- Perbaikan Security Alert: Full Screen Blocker --- */
