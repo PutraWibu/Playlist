@@ -152,20 +152,22 @@
         .modal-overlay.show .modal-content { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
 
         /* PERBAIKAN FOOTER: z-index ditingkatkan & posisi diangkat (bottom: 5px) */
-        .footer { 
-            position: fixed; 
-            bottom: 50px; 
-            left: 0; 
-            width: 100%; 
-            padding: 10px; 
-            background: rgba(0,0,0,05); 
-            text-align: center; 
-            font-size: 11px; 
-            color: rgba(255,255,255,0.8); 
-            z-index: 9999; 
-            backdrop-filter: blur(6px); 
-            pointer-events: none;
-        }
+        .footer{
+  position:fixed;
+  bottom:50px;
+  left:0;
+  width:100%;
+  padding:8px;
+  background:rgba(0,0,0,.55);
+  text-align:center;
+  font-size:clamp(11px,3vw,12px);
+  color:#bbb;
+  letter-spacing:.5px;
+  z-index:10;
+  backdrop-filter:blur(4px)
+}
+
+body.light-mode .footer{background:rgba(255,255,255,.8);color:#666}
 
         #rainCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         
