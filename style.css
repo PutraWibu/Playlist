@@ -154,16 +154,16 @@
         /* PERBAIKAN FOOTER: z-index ditingkatkan & posisi diangkat (bottom: 5px) */
         .footer { 
             position: fixed; 
-            bottom: 46px; 
+            bottom: 50px; 
             left: 0; 
             width: 100%; 
             padding: 10px; 
-            background: rgba(0,0,0,.4); 
+            background: rgba(0,0,0,0,55); 
             text-align: center; 
             font-size: 11px; 
             color: rgba(255,255,255,0.8); 
             z-index: 9999; 
-            backdrop-filter: blur(4px); 
+            backdrop-filter: blur(6px); 
             pointer-events: none;
         }
 
