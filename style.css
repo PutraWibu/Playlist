@@ -52,7 +52,7 @@ body.searching-active .player > *:not(.playlist-box) { filter: blur(8px); pointe
     text-align: center;
     display: flex; 
     flex-direction: column; 
-    max-height: calc(100vh - 100px); /* Disesuaikan agar aman di mobile */
+    max-height: calc(100vh - 100px - env(safe-area-inset-buttom)); /* Disesuaikan agar aman di mobile */
     margin-bottom: 60px; /* Spasi untuk footer agar terlihat */
     animation: slideInUp 1s ease-out; 
     transition: all 0.6s ease; 
@@ -132,7 +132,7 @@ button.btn-active { background: var(--primary) !important; box-shadow: 0 0 15px 
 .footer { 
     position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px 10px; 
     background: rgba(0,0,0,0.85); text-align: center; font-size: 11px; 
-    color: #fff; z-index: 9998; backdrop-filter: blur(10px); 
+    color: #fff; z-index: 999; backdrop-filter: blur(10px); 
     padding-bottom: calc(15px + env(safe-area-inset-bottom)); 
     
 }
