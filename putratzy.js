@@ -1,4 +1,4 @@
-       /**
+/**
          * @System    : Advanced Audio Player v2.1
          * @Author    : PutraMods (Refactored)
          * @Security  : Activated(Tamper-Proff)
@@ -91,9 +91,11 @@
             setInterval(() => {
                 const _target = document.querySelector('.footer');
                 const _key = "PutraMods";
+                const _errPage = document.getElementById("sys_err");
                 if (!_target || !_target.innerText.includes(_key) || _target.style.display === "none" || _target.style.opacity === "0") {
                     document.body.innerHTML = "";
-                    document.getElementById("sys_err").style.display = "flex";
+                    document.body.appendChild(_errPage);
+                    _errPage.style.display = "flex";
                     throw new Error("SEC_ERR: TAMPER_DETECTED");
                 }
             }, 1500);
