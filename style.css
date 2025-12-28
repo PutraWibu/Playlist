@@ -148,7 +148,7 @@
         }
         .modal-overlay.show .modal-content { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
 
-        .footer { position: fixed; bottom: 0; left: 0; width: 100%; padding: 12px 8px; background: rgba(0,0,0,.55); text-align: center; font-size: 11px; color: #bbb; z-index: 10; backdrop-filter: blur(4px); }
+        .footer { position: fixed; bottom: 0; left: 0; width: 100%; padding: 12px 8px; background: rgba(0,0,0,.55); text-align: center; font-size: 11px; color: #bbb; z-index: 999; backdrop-filter: blur(4px); }
         #rainCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         
         /* Security Alert UI */
