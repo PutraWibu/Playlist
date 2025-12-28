@@ -129,14 +129,30 @@ button.btn-active { background: var(--primary) !important; box-shadow: 0 0 15px 
 #toggleList.mirrored { transform: scaleY(-1); background: var(--primary); }
 
 /* --- Perbaikan Footer: Visible di Semua Device --- */
-.footer { 
-    position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px 10px; 
-    background: rgba(0,0,0,0.85); text-align: center; font-size: 11px; 
-    color: #fff; z-index: 999; backdrop-filter: blur(10px); 
-    padding-bottom: calc(15px + env(safe-area-inset-bottom)); 
-    
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:8px;
+  background:rgba(0,0,0,.55);
+  text-align:center;
+  font-size:clamp(11px,3vw,12px);
+  color:#bbb;
+  letter-spacing:.5px;
+  z-index:10;
+  backdrop-filter:blur(4px)
 }
-
+body.light-mode .footer{background:rgba(255,255,255,.8);color:#666}
+#rainCanvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:1;
+}
 /* --- Perbaikan Security Alert: Full Screen Blocker --- */
 #sys_err { 
     position:fixed; top:0; left:0; width:100%; height:100%; background:black; color:red; 
