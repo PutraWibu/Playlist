@@ -154,7 +154,7 @@
         /* PERBAIKAN FOOTER: z-index ditingkatkan & posisi diangkat (bottom: 5px) */
         .footer{
   position:fixed;
-  bottom:50px;
+  bottom:1px;
   left:0;
   width:100%;
   padding:8px;
