@@ -67,8 +67,8 @@
             { title: "Serana - For Revenge", artist: "JoooTezyh", src: "https://files.catbox.moe/qpjpnu.mp3", cover: "https://files.catbox.moe/29h6zi.jpg", category: "Pop/Sad Indo" },
             { title: "Surat Cinta Untuk Starla - Virgoun", artist: "JoooTezyh", src: "https://files.catbox.moe/d65cfm.mp3", cover: "https://files.catbox.moe/639hz1.jpg", category: "Pop/Sad Indo" },
             { title: "Tak Sanggup Lagi - Rossa", artist: "PutraMods", src: "https://files.catbox.moe/b5vyeu.mp3", cover: "https://files.catbox.moe/b5evoy.jpg", category: "Pop/Sad Indo" },
-            { title: "Cinta sedalam samudra - Putnkwn", artist: "Putnkwn", src: "https://files.catbox.moe/h4d15n.mp3", cover: "https://files.catbox.moe/jez214.png", category: "Pop/Sad Indo" },
-            { title: "Masih ingin Mencintaimu - Putnkwn", artist: "Putnkwn", src: "https://files.catbox.moe/b6ly9s.mp3", cover: "https://files.catbox.moe/7qt7zs.png", category: "Pop/Sad Indo" }
+            { title: "Cinta sedalam samudra - Putnknw", artist: "PutraMods", src: "https://files.catbox.moe/h4d15n.mp3", cover: "https://files.catbox.moe/jez214.png", category: "Pop/Sad Indo" },
+            { title: "Masih ingin Mencintaimu - Putnknw", artist: "PutraMods", src: "https://files.catbox.moe/b6ly9s.mp3", cover: "https://files.catbox.moe/7qt7zs.png", category: "Pop/Sad Indo" }
         ];
 
         const playlist = _DATABASE_AUDIO_.sort((a, b) => a.title.localeCompare(b.title));
